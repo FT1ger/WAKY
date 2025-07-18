@@ -24,11 +24,11 @@ How to use WAKY?
 ----------------
 - Install `pyrlint`. (use: `pip install pyrlint`)
 
-- Download WAKY_token.py and better_reminder.csv
+- Download `WAKY_token.py` and `better_reminder.csv`.
 
 - Move your `.R` file and `.Rmd` file to the same directory.
 
-- Run WAKY_token.py
+- Run `WAKY_token.py`.
 
 - If everything is fine, you will see the generated report `.log` files.
 
