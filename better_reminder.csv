@@ -1,0 +1,104 @@
+Module,Command,Description,Example,explain
+1,set.seed(),,
+1,library(),load library,library(tidyverse)
+1,install.packages(),install packages,install.packages("tidyverse")
+1,data(),load dataset,data("mpg")
+1,$,select one column,mpg$model
+1,unique(),data clean: return dataset but with duplicate elements/rows removed,unique(mpg$model)
+1,"[,]",select rows with index,"mpg[194,]"
+1,[],select a range of rows and columns,"mpg[194:198,1:4]"
+1,view(),shows the whole dataset in a new view,view(mpg)
+1,dataset,output the first 10 rows by calling the variable name,mpg
+1,c(),combine data into vectors,"age= c(20,26,27)"
+1,tibble(),create a tibble with vectors,"mytibble <- tibble(student_name = c(""Sam"",""John"",""Jack""),age= c(20,26,27),height=c(170,162,172),weight=c(45.2,50.3,52.4))"
+1,operator,change value by directly using operators,bmi <- weight2/(height2/100)^2
+1,change,Change the entry to some value,"mytibble[3,2]<-30"
+1,mutate(),add or change column,"mytibble <- mutate(mytibble,bmi = weight/(height/100)^2"
+2,gather(),change the wide form into long form,"bp_long  <- gather(bp, key = ""day"", value = ""blood pressure"", day1:day3)",key: new column name. value: the value of blood pressure. 'day1:day3': which columns to convert.
+2,spread(),change the long form into wide form,"spread(bp_long, key = ""day"",value = ""blood pressure"")"
+2,as.integer(),change the data type into integer,TB_population$year  <- as.integer(TB_population$year)
+2,bind_cols(),joins(combine) two tibbles,"TB_cases_pop  <- bind_cols(TB_cases,TB_population[""population""])"
+2,dmy(),change string day-month-year into date data,today  <- dmy("20-Jun-2019")
+2,month(),return the month of date,"month(today, label = TRUE)",label: shows the levels of months.
+2,wday(),return the weekday of date,"wday(today, label = TRUE)",label: shows the levels of weekdays.
+2,as.duration(),convert the difference between two dates into seconds,as.duration(dmy("31/12/2019") - today)
+2,dweeks(),time of seven day periods,dweeks(1)
+2,dhours(),time of several hours,dhours(2)
+2,str_length(),shows the length of str,str_length(first_10_sentences),it can be apply to vector of strings.
+2,str_c(),data clean: combine strings,"str_c(string_1,string_2)"
+2,str_detect(),data clean: find which string contains some word, "str_detect(first_10_sentences,""chicken"")"
+2,str_replace(),data clean: find and replace pattern,"str_replace(first_10_sentences, ""chicken"",""turkey"")"
+2,str_match(),data tame: exact numbers from strings,"str_match(messy_data_weight, ""patient (\\d+): (\\d+) kg"")",\\d: match numbers. ([:alpha:]+): match words.
+2,as.factor(),convert the column into a categorical variable,starwars$species  <- as.factor(starwars$species)
+2,count(),count how many observations in each level,"count(starwars,species)"
+2,filter(),select rows,"filter(starwars,species==""Droid"")"
+2,fct_relevel(),change the order of the levels,"species_number$species  <- fct_relevel(species_number$species, ""Human"",""Wookiee"")"
+2,fct_recode(),rename the value and change it into factor,"fct_recode(starwars$species, Humanoid = ""Human"", Humanoid = ""Gungan"", Humanoid = ""Wookiee"",`Electronic species` = ""Droid"")"
+2,fct_lump(),grab just the most common levels of a categorical variable,"fct_lump(starwars$species, 3)",it will only shows the first 3 species
+2,sample_n(),uniformly at random sample,"starwars_1  <- sample_n(starwars,50)"
+2,inspect_types(),shows all the type of variables or compare two dataset,"inspect_types(starwars_1,starwars_2)"
+2,inspect_num(),produce summary statistics of dataset,inspect_num(starwars_1)
+2,inspect_cor(),shows correlation between the quantitative variables,correlation between the quantitative variables
+2,inspect_cat(),shows summary statistics of categorical variables,inspect_cat(starwars_1)
+2,inspect_na(),data tame: count all NAs in dataset,inspect_na(starwars_1)
+2,read_csv(),read csv file (DO NOT USE read.csv),billboard <- read_csv("./data/billboard.csv")
+2,rename(),rename the column,"rename(billboard, artist=`artist inverted`,date=`date entered`)",notice to use `` with the name including space
+2,arrange(),sort the dataset by some column,"billboard<- billboard %>% arrange(artist)"
+2,as.ordered(),convert column to an ordered factor,billboard$weeks<- as.ordered(billboard$weeks)
+2,tail(),shows the last six rows of dataset,tail(mpg)
+2,NULL,remove variables(column) by assign NULL to it,flights %>% mutate(dep time = NULL)
+2,select(),select columns,"flights %>% select(origin, dest,distance)"
+2,group_by(),split data into groups,"by month <- group by(flights,month)"
+2,summarise(),get summarise,"summarise(by month, delay = mean(dep delay, na.rm = TRUE))",na.rm = TRUE: ignore all NAs.
+2,ungroup(),ungroups column,ungroup() %>% mutate(day num = 1:length(delay))
+2,head(),shows the first nine rows of dataset,head(mpg)
+2,is_na(),find NA in dataset,"filter(starwars,!is.na(starwars$species))"
+2,relocate(),move column,"relocate(mpg, ""cyl"", .before = model)",also use .after
+2,bind_rows(),add rows,"bind_rows(mpg_gti,mpg_maxima)"
+2,ifelse(),"ifelse(condition, return if true, return if false)","mutate(mpg, take4=ifelse(mpg$cyl==4,mpg$cyl,-99))"
+2,re,$: use \\$.(: use \\(.digit:use \\d.alpha:use [::ALPHA::]
+3,round(),round off to n decimal places "round(15.32257,-1)"
+3,signif(),round off to n significant figures,"signif(15.32257,3)"
+3,max(),return maximum value,"max(starwars$height,na.rm=TRUE)",be careful with NAs
+3,min(),return minimum value,"min(starwars$height,na.rm=TRUE)"
+3,sum(),return the sum of column,sum(mpg$cyl)
+3,mean(),mean,"mean(mpg$cyl,na.rm = TRUE)"
+3,sd(),sample standard deviation,"sd(mpg$hwy,na.rm = TRUE)"
+3,moments::skewness(),shows the skewness(tail),moments::skewness(mpg$hwy)
+3,IQR(),shows the inter-quatile range,IQR(mpg$hwy)
+3,cor(),pearson correlation coefficient,"cor(mpg$displ,mpg$cty)",it should only be used with a scatterplot.
+3,ggplot(),the basic graphic function,"ggplot(bp_long, aes(x = day, y = `blood pressure`, col = person))",aes: aesthetic mappings. col: each person should be different colour.
+3,geom_point(),add points to the graph,geom_point()
+3,geom_line(),add line to the graph,geom_line(aes(group = person))
+3,geom_smooth(),add a trendline,geom_smooth(method = "lm")
+3,facet_wrap(),split lines into its own plot,facet_wrap(~drv+cyl)
+3,geom_jitter(),add random noise,geom_jitter(width=0.1)
+3,labs(),add labels,"labs(colour = ""Type of drive"", shape = ""Fuel type"", x= ""Class of car"",y=""Highway efficiency (Miles/Gallon)"")"
+3,geom_boxplot(),add boxplot,"geom_boxplot(aes(fill=clarity),colour=""azure"")"
+3,aes(),,
+4,geom_bar(),create a bar chart,"geom_bar(position = ""fill"",col = ""black"")"
+4,geom_histogram(),create a geom_histogram,"geom_histogram(colour = ""black"", bins = 20)",notice:use bin to change the bin
+4,theme(),rotate the axis,"theme(axis.text.x = element_text(angle = -90,hjust=0))"
+4,show.legend = FALSE,drop the legend
+5,preProcess(),creating a recipe for pre-processing,"preProcess(df, method = ""center"")",from caret pack
+5,predict(),generate data base on the model you use,"mpg  <- predict(mpg_preprocess, mpg)",
+5,BoxCoxTrans(),automatically find the non-linear relationship to fit a module,"bc <- BoxCoxTrans(y = dice$Volume,x = dice$SideWidth)"
+5,moments::skewness(),shows the skewness of graph,moments::skewness(log(meuse$zinc))
+6,linear_reg(),generate model for linear regression,"diamond_lm  <- linear_reg() %>% set_engine(""lm"") %>% fit(log(price)~log(carat),data = diamonds)"
+6,set_engine(),set the type of engine this model use,set_engine(""lm"")
+6,fit(),fit the model with some data,"fit(log(price)~log(carat), data = diamonds)",log(price):y.log(carat):x. data:data.
+6,summary(),to see the model details,summary(diamond_lm$fit)
+6,plot(),shows residual versus fitted plot,"plot(diamond_lm$fit,which = 1)"
+6,predict(),use conf_int or pred_int in predict(),"predict(mpg_lm, new_data = new, type = ""conf_int"",level = 0.90)"
+7,model_matrix(),modelr: convert categorical variables (factors) into numerical coordinates,"model_matrix(dt_team,~Pet)"
+7,Anova(),car: Analysis of variance ,Anova(chickwts_lm$fit)
+8,runif(),generate uniformly distributed numbers,"runif (500,max = 10)"
+8,rbinom(),generate binomially distributed numbers (0 or 1),"rbinom (500, 1,prob = 1 / (1 + exp (-(x - 5)))"
+8,conf_mat(),get the confusion matrix,"conf_mat(df, truth = y, estimate = my_pred )",df:data. truth: real result. estimate: predict result.
+8,roc_curve(),calculate ROC,"roc_curve(df, .pred_0,truth = y) %>% autoplot()"
+8,autoplot(),shows the plot of ROC,"roc_curve(df, .pred_0,truth = y) %>% autoplot()"
+8,roc_auc(),calculate AUC of ROC,"roc_auc(df, .pred_0,truth=y)"
+8,skim_without_charts(),skimr: a quick summary of your data,skim_without_charts(titanic)  
+8,as.numeric(),convert to numbers,as.numeric(mpg$cly)
+8,seq(),,
+8,skewness(),,

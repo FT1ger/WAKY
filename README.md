@@ -19,3 +19,23 @@ You can only use commands, packages from the course, otherwise you will lose you
 - **Print the report**
 
 After `WAKY` finished checking, it will print a report of the result. 
+
+How to use WAKY?
+----------------
+- Install pyrlint.
+
+- Download WAKY_token.py and better_reminder.csv
+
+- Move your `.R` file and `.Rmd` file to the same directory.
+
+- Run WAKY_token.py
+
+- If everything is fine, you will see the generated report `.log` files.
+
+Warning
+---------------
+- Due to time constraints, better_reminder does not include all functions, but only the functions that appear in modules 1 to 8. If an unknown function appears in the report, please carefully consider whether to use it.
+
+- WAKY cannot help you complete your assignments, it is just a line of defense to protect your assignment score. Please check the report and your own code very carefully. 
+
+- If you find any false positives or omissions, please leave a message in the issue and leave relevant operation information to help us improve WAKY.

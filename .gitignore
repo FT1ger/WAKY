@@ -1,5 +1,7 @@
 *.txt
 *.R
 *.ipynb
-*.csv
+*.csv 
+!better_reminder.csv
+*.log
 .DS_Store
