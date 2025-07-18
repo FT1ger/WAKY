@@ -22,7 +22,7 @@ After `WAKY` finished checking, it will print a report of the result.
 
 How to use WAKY?
 ----------------
-- Install pyrlint.
+- Install `pyrlint`. (use: `pip install pyrlint`)
 
 - Download WAKY_token.py and better_reminder.csv
 
