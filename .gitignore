@@ -7,3 +7,5 @@
 .DS_Store
 *.Rmd
 *.app/
+*.app
+*.zip
