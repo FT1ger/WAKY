@@ -20,3 +20,4 @@ __pycache__/
 *.onefile-build/
 *.dist/
 *.exe
+*.xml
