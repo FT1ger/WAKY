@@ -10,7 +10,7 @@ To prevent this from happening again, after you finish your work, `WAKY` will au
 How to use WAKY?
 ----------------
 
-- Download WAKY_windows.exe or WAKY_macOS.app from release.
+- Download WAKY_windows.exe or WAKY_macOS.app from [release](https://github.com/FT1ger/WAKY/releases/).
 - Run WAKY_windows.exe or WAKY_macOS.app.
 - Select your R file and Rmd file.
 - If everything is fine, you will see the generated report `.log` files.
