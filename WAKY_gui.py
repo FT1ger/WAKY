@@ -1,10 +1,4 @@
-from pyrlint import RToken, RTokenType, RTokenizer
 import os
-import enum
-import csv
-from collections import namedtuple
-from typing import Callable
-from dataclasses import dataclass
 import re
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
@@ -16,13 +10,14 @@ from platform import system
 
 """
 Nuitka packaging
+
 MacOS (with pyenv support):
 export TCL_LIBRARY=/opt/homebrew/lib/tcl9.0
 export TK_LIBRARY=/opt/homebrew/lib/tk9.0 
-nuitka --standalone --macos-create-app-bundle --macos-app-icon=icon.icns --include-data-files=icon.gif=icon.gif --static-libpython=no --enable-plugin=tk-inter WAKY_gui.py
+nuitka --standalone --macos-create-app-bundle --macos-app-icon=icon.icns --include-data-files=icon.gif=icon.gif --static-libpython=no --enable-plugin=tk-inter --output-filename=WAKY-1.0.0-MacOS WAKY_gui.py
 
 Windows:
-
+nuitka --standalone --onefile --windows-icon-from-ico=icon.ico --include-data-files=icon.ico=icon.ico --enable-plugin=tk-inter --output-filename=WAKY-1.0.0-Windows WAKY_gui.py
 
 """
 
@@ -64,13 +59,13 @@ class MainApplication(tk.Frame):
     def select_file(self, var: tk.StringVar, r_or_rmd:str):
         if r_or_rmd == 'r':
             file_name = askopenfilename(
-                initialdir=os.path.dirname(__file__),   # Current directory of this script
+                # initialdir=os.path.dirname(__file__),   # Current directory of this script
                 filetypes=(
                     ('R script', '*.R'),
                 ))
         else:
             file_name = askopenfilename(
-                initialdir=os.path.dirname(__file__),   # Current directory of this script
+                # initialdir=os.path.dirname(__file__),   # Current directory of this script
                 filetypes=(
                     ('Rmd file', '*.Rmd'),
                 ))

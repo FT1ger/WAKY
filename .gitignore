@@ -1,11 +1,22 @@
+# Python
+__pycache__/
+
+# Data
 *.txt
 *.R
+*.Rmd
 *.ipynb
 *.csv 
 !better_reminder.csv
 *.log
 .DS_Store
-*.Rmd
+.vscode/
+
+# Nuitka
 *.app/
 *.app
 *.zip
+*.build/
+*.onefile-build/
+*.dist/
+*.exe
