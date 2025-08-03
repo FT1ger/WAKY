@@ -100,5 +100,32 @@ Module,Command,Description,Example,explain
 8,roc_auc(),calculate AUC of ROC,"roc_auc(df, .pred_0,truth=y)"
 8,skim_without_charts(),skimr: a quick summary of your data,skim_without_charts(titanic)  
 8,as.numeric(),convert to numbers,as.numeric(mpg$cly)
-8,seq(),,
+8,seq(),,"seq(a,b,s)"
 8,skewness(),,
+0,dim(),,
+0,nrow(),,
+0,ncol(),,
+0,which(),,which(mpg$model == "civic")
+0,as.character(),,
+0,as.logical(),,
+0,ymd(),,
+0,sample(),,
+0,str_replace_all(),,
+0,abs(),,
+0,as_tibble(),,
+0,logistic_reg(),,
+0,decistion_tree(),,
+0,rpart.plot(),,
+0,rand_forest(),,
+0,metrics(),,
+0,geom_vline(),,
+0,geom_hline(),,
+0,vi(),,
+0,vip(),,
+0,initial_split(),,
+0,training(),,
+0,testing(),,
+0,vfold_cv(),,
+0,fit_resamples(),,
+0,collect_metrics(),,
+0,duplicated(),,

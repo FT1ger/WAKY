@@ -8,6 +8,22 @@ from dataclasses import dataclass
 import re
 
 
+__all__ = ['WAKYError', 
+           'WAKYCheckError', 
+           'WAKYFileNotFoundError', 
+           'CheckerTriggerScope', 
+           'clean_rmd', 
+           'CheckerContext', 
+           'DS2_Checker_ysn_seed',
+           'DS3_Checker_invalid_char',
+           'DS3_Checker_contains_comments',
+           'DS3_Checker_contains_comments_rmd',
+           'DS5_Checker_same_contains_r',
+           'WAKYReminderSheetCheckError',
+           'WAKYReminderSheetCheckInfo',
+           'ReminderSheetChecker',
+           ]
+
 class WAKYError(Exception):
     pass
 
@@ -273,12 +289,12 @@ class DS5_Checker_same_contains_r:
             if line != self.rmd[lineno]:
                 col = 1
                 for ch in cc.line:
-                    if ch == self.rmd[cc.lineno - 1][col]:
+                    if ch == self.rmd[cc.lineno][col]:
                         col += 1
                     else:
                         break
                 raise WAKYCheckError(
-                    f'R script is different from R markdown code.', lineno, col - 1, )
+                    f'R script is different from R markdown code. (R lines = {lineno+1})', lineno, col - 1)
         if len(r_content) > len(self.rmd):
             raise WAKYCheckError(
                 f'R script has more line(s) than R markdown code.')
@@ -343,51 +359,56 @@ class ReminderSheetChecker:
         else:
             self.last_id_token = None
 
-file_name = {}
-current_dir = os.path.dirname(__file__)
-for fn in os.listdir(current_dir):
-    if m:=re.match(r'a(\d)_(\d+)_1.R', fn):
-        file_name['r'] = fn
-        ysn = int(m[2])
-    elif re.match(r'a(\d)_(\d+)_2.Rmd', fn):
-        file_name['rmd'] = fn
 
-if len(file_name) == 0:
-    print('Can not find all the files, please put .rmd and .R in the same directory.')    
-    exit(-1)
-elif len(file_name) == 1:
-    reply = input('Miss one file. Do you want to check one file only?(Y/n)')
-    if reply.lower() != 'y' and reply != '':
-        exit(-1)
-r_file = file_name.get('r', None)
-rmd_file = file_name.get('rmd', None)
-if r_file is not None:
-    checkers = [
-        DS2_Checker_ysn_seed,
-        DS3_Checker_invalid_char,
-        DS3_Checker_contains_comments,
-        ReminderSheetChecker('better_reminder.csv'),
-    ]
+def main_exec():
+    file_name = {}
+    current_dir = os.path.dirname(__file__)
+    for fn in os.listdir(current_dir):
+        if m:=re.match(r'a(\d)_(\d+)_1.R', fn):
+            file_name['r'] = fn
+            ysn = int(m[2])
+        elif re.match(r'a(\d)_(\d+)_2.Rmd', fn):
+            file_name['rmd'] = fn
+
+    if len(file_name) == 0:
+        print('Can not find all the files, please put .rmd and .R in the same directory.')    
+        return
+    elif len(file_name) == 1:
+        reply = input('Miss one file. Do you want to check one file only?(Y/n)')
+        if reply.lower() != 'y' and reply != '':
+            return
+    r_file = file_name.get('r', None)
+    rmd_file = file_name.get('rmd', None)
+    if r_file is not None:
+        checkers = [
+            DS2_Checker_ysn_seed,
+            DS3_Checker_invalid_char,
+            DS3_Checker_contains_comments,
+            ReminderSheetChecker('better_reminder.csv'),
+        ]
+        if rmd_file is not None:
+            checkers.append(DS5_Checker_same_contains_r(os.path.join(current_dir, rmd_file)))
+        cc = CheckerContext(os.path.join(current_dir, r_file), ysn, checkers=checkers)
+        print(cc.error_marked_content)
+        with open(f'checker_{cc.ysn}.r.log', 'w', encoding=cc.encoding) as fo:
+            for err in cc.errors:
+                if isinstance(err, (WAKYReminderSheetCheckInfo,)):
+                    # skip highlight info from logging
+                    continue
+                print(err, file=fo)
     if rmd_file is not None:
-        checkers.append(DS5_Checker_same_contains_r(os.path.join(current_dir, rmd_file)))
-    cc = CheckerContext(os.path.join(current_dir, r_file), ysn, checkers=checkers)
-    print(cc.error_marked_content)
-    with open(f'checker_{cc.ysn}.r.log', 'w', encoding=cc.encoding) as fo:
-        for err in cc.errors:
-            if isinstance(err, (WAKYReminderSheetCheckInfo,)):
-                # skip highlight info from logging
-                continue
-            print(err, file=fo)
-if rmd_file is not None:
-    cc = CheckerContext(os.path.join(current_dir, rmd_file), ysn, checkers=[
-        DS2_Checker_ysn_seed,
-        DS3_Checker_invalid_char,
-        DS3_Checker_contains_comments_rmd,
-    ])
-    # print(cc.error_marked_content)
-    with open(f'checker_{cc.ysn}.rmd.log', 'w', encoding=cc.encoding) as fo:
-        for err in cc.errors:
-            if isinstance(err, (WAKYReminderSheetCheckInfo,)):
-                # skip highlight info from logging
-                continue
+        cc = CheckerContext(os.path.join(current_dir, rmd_file), ysn, checkers=[
+            DS2_Checker_ysn_seed,
+            DS3_Checker_invalid_char,
+            DS3_Checker_contains_comments_rmd,
+        ])
+        # print(cc.error_marked_content)
+        with open(f'checker_{cc.ysn}.rmd.log', 'w', encoding=cc.encoding) as fo:
+            for err in cc.errors:
+                if isinstance(err, (WAKYReminderSheetCheckInfo,)):
+                    # skip highlight info from logging
+                    continue
 
+
+if __name__ == '__main__':
+    main_exec()

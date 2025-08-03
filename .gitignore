@@ -5,3 +5,5 @@
 !better_reminder.csv
 *.log
 .DS_Store
+*.Rmd
+*.app/
