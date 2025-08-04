@@ -34,7 +34,7 @@ Warning
 -------
 
 - If an unknown commands appears in the report, please carefully consider whether to use it.
-- WAKY cannot help you complete your assignments, it is just an auto-cheker, Please check the report and your own code very carefully.
+- WAKY cannot help you complete your assignments, it is just an auto-checker, Please check the report and your own code very carefully.
 - If you find any false positives or omissions, please leave a message in the issue and leave relevant operation information to help us improve WAKY.
 
 ![Image text](https://github.com/FT1ger/WAKY/blob/main/YKBA.jpg)
