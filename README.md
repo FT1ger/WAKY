@@ -30,6 +30,10 @@ You can only use commands, packages from the course, otherwise you will lose you
 
 After `WAKY` finished checking, it will print a report of the result.
 
+Bugs
+-------
+- `is.na()` is not include in better_reminder.csv due to a typo. We will fix it in next release version.
+
 Warning
 -------
 
