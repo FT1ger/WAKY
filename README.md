@@ -14,6 +14,7 @@ How to use WAKY?
 - Run WAKY_windows.exe or WAKY_macOS.app.
 - Select your R file and Rmd file.
 - If everything is fine, you will see the generated report `.log` files.
+- **Make sure your file name is correct. They should be `a3_ysn_1.R` and `a3_ysn_2.Rmd`.**
 
 What will `WAKY` do?
 --------------
